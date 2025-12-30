@@ -48,7 +48,7 @@
 			<ul class="pagination">
 				<li v-if="store.startPage > 1"><a class="nav-link" @click="store.movePage(store.startPage-1)">&laquo;</a></li>
 				<li v-for="i in store.range" :class="i===store.curpage?'active':''"><a class="nav-link" @click="store.movePage(i)">{{i}}</a></li>
-				<li vi-if="store.endPage < store.totalpage"  @click="store.movePage(store.endPage+1)"><a class="nav-link">&raquo;</a></li>
+				<li v-if="store.endPage < store.totalpage"  @click="store.movePage(store.endPage+1)"><a class="nav-link">&raquo;</a></li>
 			</ul>
 		</div>
 	</div>
