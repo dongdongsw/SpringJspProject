@@ -35,7 +35,7 @@
 		<div class="row">
 		  <div class="col-md-3" v-for="(vo,index) in store.list" :key="index">
 		    <div class="thumbnail">
-		      <a href="#">
+		      <a :href="'/detail?no=' + vo.no">
 		        <img :src="vo.poster" ;title="vo.title" alt="Lights" style="width:240px; height:150px;">
 		        <div class="caption">
 		          <p>{{vo.chef}}</p>
@@ -48,7 +48,7 @@
 			<ul class="pagination">
 				<li v-if="store.startPage > 1"><a class="nav-link" @click="store.movePage(store.startPage-1)">&laquo;</a></li>
 				<li v-for="i in store.range" :class="i===store.curpage?'active':''"><a class="nav-link" @click="store.movePage(i)">{{i}}</a></li>
-				<li vi-if="store.endPage < store.totalpage"><a class="nav-link">&raquo;</a></li>
+				<li vi-if="store.endPage < store.totalpage"  @click="store.movePage(store.endPage+1)"><a class="nav-link">&raquo;</a></li>
 			</ul>
 		</div>
 	</div>

@@ -6,7 +6,12 @@ const  useRecipeStore = defineStore('recipe',{
 		curpage:1,
 		totalpage:0,
 		startPage:0,
-		endPage:0
+		endPage:0,
+		detail:{
+			vo:{},
+			tList:[],
+			iList:[]
+		}
 	}),
 	getters:{
 		range:(state)=>{
@@ -37,6 +42,11 @@ const  useRecipeStore = defineStore('recipe',{
 		movePage(page){
 			this.curpage = page
 			this.recipeListData()
+		},
+		
+		async recipeDetailData(no){
+			const res = await api.get(`/recipe/detail_vue/?no=${no}`)
+			this.detail = res.data
 		}
 	}
 })
