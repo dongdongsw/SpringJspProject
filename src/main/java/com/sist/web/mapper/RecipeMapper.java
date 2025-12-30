@@ -21,7 +21,7 @@ public interface RecipeMapper {
 			+ "OFFSET #{start} ROWS FETCH NEXT 12 ROWS ONLY")
 	public List<RecipeVO> recipeListData(int start);
 	
-	@Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe"
+	@Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe "
 			+ "WHERE no IN(SELECT no FROM recipe INTERSECT SELECT no FROM recipeDetail)")
 	public int recipeTotalPage();
 	// 상세보기

@@ -7,14 +7,14 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   datasource:
-    url: jdbc:oracle:thin:@//211.238.142.22.1521/XE
+    url: jdbc:oracle:thin:@//211.238.142.22:1521/XE
     username: hr
     password: happy
     driver-class-name: oracle.jdbc.OracleDriver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
-      maximum-pool-size: 30
+      maximum-pool-size: 10
       idle-timeout: 3000
       max-lifetime: 1800000
       connection-timeout: 30000
