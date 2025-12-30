@@ -61,6 +61,7 @@
 				</tr>
 				<tr>
 					<td class="text-right" colspan="3">
+						<button type="button" class="btn-sm btn-primary">예약</button>
 						<button type="button" class="btn-sm btn-danger" onclick="javascript:history.back()">목록</button>
 					</td>
 				</tr>
