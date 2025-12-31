@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 	<script src="https://unpkg.com/vue-demi"></script>
 	<script src="https://unpkg.com/pinia@2/dist/pinia.iife.prod.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<style type="text/css">
-		.container{
-			margin-top: 50px;
-		}
+		
 		.row{
 			margin: 0px auto;
 			width: 960px;
@@ -31,7 +30,18 @@
 	</style>
 </head>
 <body>
-	<div class="container">
+	<div class="container" style="margin-top: 30px;">
+		<div class="row text-right">
+			<c:if test="${sessionScope.id == null}">
+				<a href="/member/login"class="btn btn-sm btn-danger">로그인</a>
+			</c:if>
+			<c:if test="${sessionScope.id != null}">
+			<a href="/member/logout"class="btn btn-sm btn-success">로그아웃</a>
+			</c:if>
+		</div>
+	</div>
+	<div class="container" id="list_app" style="margin-top: 30px;">
+	
 		<div class="row">
 		  <div class="col-md-3" v-for="(vo,index) in store.list" :key="index">
 		    <div class="thumbnail">
@@ -72,7 +82,7 @@
 		})
 		
 		recipeApp.use(createPinia())
-		recipeApp.mount(".container")
+		recipeApp.mount("#list_app")
 	</script>
 </body>
 </html>

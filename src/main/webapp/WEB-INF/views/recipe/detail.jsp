@@ -30,8 +30,8 @@
 	</style>
 </head>
 <body>
-	<div class="container">
-		<div class="row" id="recipe_detail">
+	<div class="container" id="recipe_detail">
+		<div class="row" >
 			<table class="table">
 			<tbody>
 				<tr>
