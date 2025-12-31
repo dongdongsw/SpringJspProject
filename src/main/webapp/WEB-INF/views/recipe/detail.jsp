@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,9 +29,22 @@
 			
 		}
 	</style>
+	<script>
+		const SESSION_ID = '${sessionScope.id}'
+	</script>
 </head>
 <body>
-	<div class="container" id="recipe_detail">
+	<div class="container" style="margin-top: 30px;">
+		<div class="row text-right">
+			<c:if test="${sessionScope.id == null}">
+				<a href="/member/login"class="btn btn-sm btn-danger">로그인</a>
+			</c:if>
+			<c:if test="${sessionScope.id != null}">
+			<a href="/member/logout"class="btn btn-sm btn-success">로그아웃</a>
+			</c:if>
+		</div>
+	</div>
+	<div class="container" id="recipe_detail" style="margin-top: 30px;">
 		<div class="row" >
 			<table class="table">
 			<tbody>
@@ -99,11 +113,54 @@
 		</div>
 		
 		<div class="row" style="margin-top: 20px;" id="recipe_reply">
-		
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>
+							<table class="table" v-for="(rvo,index) in rstore.reply_list" :key="index">
+								<tbody>
+									<tr>
+										<td class="text-left">ㅁ{{rvo.name}} &nbsp; {{rvo.dbday}}</td>
+										<td class="text-right">
+											<button type="button" class="btn-xs btn-success" v-if="rstore.sessionId===rvo.id" @click="rstore.toggleUpdate(rvo.no, rvo.msg)">
+												{{rstore.upReplyNo === rvo.no?'취소':'수정'}}
+											</button>
+											<button type="button" class="btn-xs btn-warning" v-if="rstore.sessionId===rvo.id" @click="rstore.replyDelete(rvo.no)">삭제</button>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="text-left">
+											<pre style="white-space: pre-wrap;">{{rvo.msg}}</pre>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="text-left" v-if="rstore.upReplyNo===rvo.no">
+											<textarea rows="5" cols="100" style="float: left;" v-model="rstore.updateMsg[rvo.no]"></textarea>
+											<button type="button" class="btn-success" style="width: 100px; height: 102px; float: left;" @click="rstore.replyUpdate(rvo.no)">댓글 수정</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table" v-if="rstore.sessionId">
+				<tbody>
+					<tr>
+						<td>
+							<textarea rows="5" cols="100" style="float: left;" v-model="rstore.msg"></textarea>
+							<button type="button" class="btn-success" style="width: 100px; height: 102px; float: left;" @click="rstore.replyInsert()">작성</button>
+							
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<script src="/js/axios.js"></script>
 	<script src="/js/recipeStore.js"></script>
+	<script src="/js/replyStore.js"></script>
 	<script >
 		const {createApp, onMounted} = Vue
 		const {createPinia} = Pinia
@@ -112,19 +169,26 @@
 			setup(){
 				const store = useRecipeStore()
 				const params = new URLSearchParams(location.search)
-				const fno = params.get('no')
+				const no = params.get('no')
+				
+				const rstore = useReplyStore()
+				
 				onMounted(()=>{
-					store.recipeDetailData(fno)
+					store.recipeDetailData(no)
+					rstore.sessionId = SESSION_ID
+					rstore.replyListData(no)
 				})
 				
 				return {
-					store
+					store,
+					rstore
 				}
 			}
 			
 		})
 		detailApp.use(createPinia())
 		detailApp.mount("#recipe_detail")
+		
 	</script>
 </body>
 </html>

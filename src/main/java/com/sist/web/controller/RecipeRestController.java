@@ -35,7 +35,7 @@ public class RecipeRestController {
 		Map map = new HashMap<>();
 		try {
 			
-			list = rService.recipeListData(page);
+			list = rService.recipeListData((page-1)*12);
 			int totalpage = rService.recipeTotalPage();
 			
 			map.put("list", list);
